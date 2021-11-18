@@ -52,7 +52,7 @@ def reply_whatsapp():
 
 #https://www.instagram.com/reel/CEUqwfFpgo0/?igshid=10veydqls6mx4
 def check_for_insta_url(msg):
-    if 'https://www.instagram.com/' in msg:
+    if 'instagram.com/' in msg:
         return ReelsParser().get_reels_videoUrl(msg)
     else:
         return "send instagram link!"
