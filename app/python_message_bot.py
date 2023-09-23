@@ -45,7 +45,7 @@ def reply_whatsapp():
                 message.media(url)
                 response.append(message)
         msg = Message()
-        msg.body("Here are the image/video")
+        msg.body("Here is the image/video")
         response.append(msg)
     print('final response', str(response))
     return str(response)
