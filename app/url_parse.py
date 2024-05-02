@@ -1,9 +1,9 @@
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
 import requests
-from requests.api import patch
 from pathlib import Path
 
+#deprecated
 class ReelsParser:
 
     def get_reels_videoUrl(self, url):

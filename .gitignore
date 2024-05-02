@@ -1,3 +1,4 @@
 .DS_Store
 *.pyc
 app/secret_keys.py
+app/secret_keys.py

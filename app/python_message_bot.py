@@ -1,6 +1,6 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import Message, MessagingResponse
-from url_parse import ReelsParser
+#from url_parse import ReelsParser
 from teradownloader import TeraDownloader
 from yt_downlaoder import YTLoader
 import requests
