@@ -48,7 +48,7 @@ def __url_hander(url):
         if any(domain in url for domain in ytdlp_suported_domain):
             dlink = YTLoader().getUrl(url)
         elif 'teraboxapp.com' in url:
-            dlink = TeraDownloader().getDownloadLink(url)
+            dlink = TeraDownloader().get_fast_download_link(url)
     else:
         dlink = "❌ Invalid Link 💦 \n Please send a valid *video* link from given domains, Youtube | x.com | terabox | instagram \n 🍑" 
     return dlink

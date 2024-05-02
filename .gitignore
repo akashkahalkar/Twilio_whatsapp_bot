@@ -2,3 +2,5 @@
 *.pyc
 app/secret_keys.py
 app/secret_keys.py
+*.mp4
+app/secret_keys.py
