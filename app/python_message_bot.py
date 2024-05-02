@@ -1,61 +1,69 @@
 from flask import Flask, request
-from twilio.twiml.messaging_response import Body, Media, Message, MessagingResponse
-from twilio.rest import Client
+from twilio.twiml.messaging_response import Message, MessagingResponse
 from url_parse import ReelsParser
-import urllib.parse as urlparse
-
+from teradownloader import TeraDownloader
+from yt_downlaoder import YTLoader
+import requests
+import validators
 
 app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
-
 def check_server():
     return "Hello there"
 
-@app.route("/whatsapp", methods=["GET", "POST"])
-def reply_whatsapp():
-    print(request.values)
-
-    response = MessagingResponse()
-    
-    #get value of body parameter from request
+@app.route("/shortcuts", methods=["GET", "POST"])
+def handle_shortcuts():
     input_msg = str(request.values.get("Body"))
-    #check if given is url for any instagram resource
-    result = check_for_insta_url(input_msg)
-    print("result from url parser: ", result)
-    if isinstance(result, str):
-        print("passed as string")
-        message = Message()
-        #only single result
-        if "http" in result:
-            
-            #create response body by appending text and media url
-            message.body("Here is the image/video")
-            message.media(result)
-        else:
-            #create response body by appending text and media url
-            message.body(result)
-        response.append(message)
-    else:
-        #array
-        print("passed as array")
-        for url in result:
-            if url is not None:
-                message = Message()
-                message.media(url)
-                response.append(message)
-        msg = Message()
-        msg.body("Here is the image/video")
-        response.append(msg)
-    print('final response', str(response))
+    result = __url_hander(input_msg)
+    response = MessagingResponse()
+    message = Message()
+    message.body(result)
+    response.append(message)
     return str(response)
 
-#https://www.instagram.com/reel/CEUqwfFpgo0/?igshid=10veydqls6mx4
-def check_for_insta_url(msg):
-    if 'instagram.com/' in msg:
-        return ReelsParser().get_reels_videoUrl(msg)
+@app.route("/whatsapp", methods=["GET", "POST"])
+def reply_whatsapp():    
+    #get value of url query parameter from request
+    input_msg = str(request.values.get("Body"))
+    result = __url_hander(input_msg)
+    
+    mediaSize = __get_media_size(result)
+    response = MessagingResponse()
+    message = Message()
+    if  mediaSize > 0 and mediaSize < 20:
+        message.body("Requested video")
+        message.media(result)
     else:
-        return "send instagram link!"
+        message.body(f"✅ Here is the Download Link: \n {result}")
+        response.append(message)
+    return str(response)
+
+def __url_hander(url):
+    dlink = ""
+    all_supported_domain = {'instagram.com', 'x.com', 'youtube.com', 'teraboxapp.com'}
+    ytdlp_suported_domain = {'instagram.com', 'x.com', 'youtube.com'}
+
+    if validators.url(url) and any(domain in url for domain in all_supported_domain) :
+        if any(domain in url for domain in ytdlp_suported_domain):
+            dlink = YTLoader().getUrl(url)
+        elif 'teraboxapp.com' in url:
+            dlink = TeraDownloader().getDownloadLink(url)
+    else:
+        dlink = "❌ Invalid Link 💦 \n Please send a valid *video* link from given domains, Youtube | x.com | terabox | instagram \n 🍑" 
+    return dlink
+
+def __get_media_size(url):
+    try:
+        response = requests.head(url)
+        if response.status_code == 200:
+            size = int(response.headers.get('content-length', 0))
+            inMb = size / (1024 * 1024)
+            return int(inMb)
+        else:
+            return -1
+    except Exception as e:
+       return 0
 
 if __name__ == "__main__":
     app.run()
