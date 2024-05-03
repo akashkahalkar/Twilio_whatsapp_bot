@@ -1,6 +1,6 @@
 from flask import Flask
-from .shortcuts.routes import shortcuts
-from .twilio_webhook.routes import twilio_api
+from shortcuts.routes import shortcuts
+from twilio_webhook.routes import twilio_api
 
 def create_app():
     app = Flask(__name__)
@@ -13,3 +13,6 @@ def create_app():
         return "<B>Ahoy, landlubber!</B> <br><p>What be yer business sailin' these treacherous seas?<p>"
     return app
 
+if __name__ == "__main__":
+    app = create_app()
+    app.run(debug=False)
