@@ -1,9 +1,9 @@
-from concurrent.futures import ThreadPoolExecutor
-import requests
-from secret_keys import TERA_KEY
 import os
-from downloader import VideoDownloader
+import requests
 import validators
+from concurrent.futures import ThreadPoolExecutor
+from app.secret_keys import TERA_KEY
+
 
 class TeraDownloader:
     
