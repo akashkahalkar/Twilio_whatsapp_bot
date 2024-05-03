@@ -2,7 +2,7 @@ import os
 import requests
 import validators
 from concurrent.futures import ThreadPoolExecutor
-from secret_keys import TERA_KEY
+#from secret_keys import TERA_KEY
 
 
 class TeraDownloader:
@@ -18,7 +18,6 @@ class TeraDownloader:
     def bulk_fetch_download_links(self, urls):
         # Create an empty list to store download links
         dlinks = []
-        print(f"CPU counts {os.cpu_count()}")
         # Define a function to be executed by each thread
         def fetch_and_append(url):
             dlink = self.get_fast_download_link(url)
@@ -35,7 +34,7 @@ class TeraDownloader:
 
     def __get_dlink(self, url):
 
-        headers = {"key": TERA_KEY}
+        headers = {"key": os.environ.get("TERA_KEY")}
         data = {"url": url}
 
         try:
