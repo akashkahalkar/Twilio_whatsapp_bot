@@ -1,6 +1,5 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import Message, MessagingResponse
-#from url_parse import ReelsParser
 from teradownloader import TeraDownloader
 from yt_downlaoder import YTLoader
 import requests
@@ -10,7 +9,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def check_server():
-    return "Hello there"
+    return "Ahoy, landlubber! What be yer business sailin' these treacherous seas?"
 
 @app.route("/shortcuts", methods=["GET", "POST"])
 def handle_shortcuts():
@@ -22,7 +21,7 @@ def handle_shortcuts():
     response.append(message)
     return str(response)
 
-@app.route("/whatsapp", methods=["GET", "POST"])
+@app.route("/twilio/whatsapp", methods=["GET", "POST"])
 def reply_whatsapp():    
     #get value of url query parameter from request
     input_msg = str(request.values.get("Body"))
@@ -35,7 +34,7 @@ def reply_whatsapp():
         message.body("Requested video")
         message.media(result)
     else:
-        message.body(f"✅ Here is the Download Link: \n {result}")
+        message.body(f"✅ Avast ye matey! Take heed and follow this map to the treasure: \n {result}")
         response.append(message)
     return str(response)
 
