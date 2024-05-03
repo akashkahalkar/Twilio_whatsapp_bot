@@ -1,5 +1,5 @@
-from app.yt_downlaoder import YTLoader
-from app.teradownloader import TeraDownloader
+from app.downloader.yt_downlaoder import YTLoader
+from app.downloader.teradownloader import TeraDownloader
 
 #handle should get a valid url hence the url should be check before this.
 class URLHandler:
@@ -14,5 +14,4 @@ class URLHandler:
             elif 'teraboxapp.com' in url:
                 return TeraDownloader().get_fast_download_link(url)
         else:
-            #dlink = "❌ Invalid Link 💦 \n Please send a valid *video* link from given domains, Youtube | x.com | terabox | instagram \n 🍑" 
             return None

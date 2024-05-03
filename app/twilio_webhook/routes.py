@@ -13,8 +13,11 @@ def checkServer():
 def handle_whatsapp_webhook():
 
     message_handler = TwilioMessageHandler()
+    error_message = message_handler.get_error_message("Arrr! I be at yer service, matey! Unfortunately,\n I can fetch links from the seven seas like YouTube or Instagram or X or terabox. 🏴‍☠️")
     receivedUrl = str(request.values.get("Body"))
     if not validators.url(receivedUrl):
-        return message_handler.get_error_message("Invalid url")
+        return error_message
     downloadLink = URLHandler().handle(receivedUrl)
+    if downloadLink is None:
+        return error_message
     return message_handler.get_message(downloadLink)

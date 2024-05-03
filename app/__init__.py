@@ -1,6 +1,6 @@
 from flask import Flask
-from .twilio_webhook.routes import twilio_api
 from .shortcuts.routes import shortcuts
+from .twilio_webhook.routes import twilio_api
 
 def create_app():
     app = Flask(__name__)
