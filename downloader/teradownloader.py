@@ -2,7 +2,7 @@ import os
 import requests
 import validators
 from concurrent.futures import ThreadPoolExecutor
-#from secret_keys import TERA_KEY
+
 
 
 class TeraDownloader:
