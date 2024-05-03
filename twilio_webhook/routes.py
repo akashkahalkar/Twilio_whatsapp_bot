@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 import validators
-from app.handler import URLHandler
-from app.twilio_webhook.twilio_message_handler import TwilioMessageHandler
+from handler import URLHandler
+from twilio_webhook.twilio_message_handler import TwilioMessageHandler
 
 twilio_api = Blueprint('twilio', __name__, url_prefix='/twilio')
 

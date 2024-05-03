@@ -1,5 +1,5 @@
-from app.downloader.yt_downlaoder import YTLoader
-from app.downloader.teradownloader import TeraDownloader
+from downloader.yt_downlaoder import YTLoader
+from downloader.teradownloader import TeraDownloader
 
 #handle should get a valid url hence the url should be check before this.
 class URLHandler:

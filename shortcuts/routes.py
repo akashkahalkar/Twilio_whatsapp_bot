@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import request
-from app.handler import URLHandler
+from handler import URLHandler
 import validators
 
 shortcuts = Blueprint('shortcuts', __name__, url_prefix='/shortcuts')
