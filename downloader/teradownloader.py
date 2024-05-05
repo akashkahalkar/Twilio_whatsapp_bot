@@ -30,8 +30,10 @@ class TeraDownloader:
         return dlinks
 
     def __get_dlink(self, url):
-
-        headers = {"key": os.environ.get("TERA_KEY")}
+        key = os.environ.get("TERA_KEY")
+        if key is None:
+            return "Api key not found"
+        headers = {"key": key}
         data = {"url": url}
 
         try:
