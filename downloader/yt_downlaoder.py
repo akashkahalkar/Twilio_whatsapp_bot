@@ -9,9 +9,11 @@ class YTLoader:
            "simulate": True,
            "forceurl": True
            }
-        
-        with yt_dlp.YoutubeDL(options) as ytdl:
-            info = ytdl.extract_info(url)
-            dUrl = info["url"]
-            return dUrl
+        try:
+            with yt_dlp.YoutubeDL(options) as ytdl:
+                info = ytdl.extract_info(url)
+                dUrl = info["url"]
+                return dUrl
+        except Exception as e:
+            return f"Error occured {e}"
 

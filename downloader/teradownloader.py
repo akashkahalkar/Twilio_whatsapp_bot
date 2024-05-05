@@ -3,12 +3,9 @@ import requests
 import validators
 from concurrent.futures import ThreadPoolExecutor
 
-
-
 class TeraDownloader:
     
     def get_fast_download_link(self, url):
-        res = ""
         dlink = self.__get_dlink(url)
         if dlink and "d.terabox.app" in dlink:
             dlink = dlink.replace("d.terabox.app", "d3.terabox.app")

@@ -15,6 +15,13 @@ class URLHandler:
             elif 'teraboxapp.com' in url:
                 return TeraDownloader().get_fast_download_link(url)
             elif 'instagram.com' in url:
-                return InstaDownloader().get_reel_download_link(url)
+                result = YTLoader().getUrl(url)
+                if result is not None and 'Error' not in result:
+                    return result
+                else:
+                    result = InstaDownloader().get_reel_download_link(url)
+                    if result is not None and 'Error' not in result:
+                        return result
+                return None
         else:
             return None
