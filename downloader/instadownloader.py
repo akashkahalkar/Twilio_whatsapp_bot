@@ -7,6 +7,6 @@ class InstaDownloader:
         try: 
             post = instaloader.Post.from_shortcode(loader.context, post_url.split("/")[-2])
             return post.video_url
-        
+
         except Exception as e:
-            return f"Error occured {e}"
+            return None
