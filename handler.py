@@ -1,6 +1,6 @@
-from downloader.yt_downlaoder import YTLoader
-from downloader.teradownloader import TeraDownloader
-from downloader.instadownloader import InstaDownloader
+from downloaders.yt_downlaoder import YTLoader
+from downloaders.teradownloader import TeraDownloader
+from downloaders.instadownloader import InstaDownloader
 
 #handle should get a valid url hence the url should be check before this.
 class URLHandler:
