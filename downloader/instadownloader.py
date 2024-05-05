@@ -1,5 +1,4 @@
 import instaloader
-from instagrapi import Client
 
 class InstaDownloader:
 
