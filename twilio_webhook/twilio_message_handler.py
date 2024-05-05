@@ -19,8 +19,6 @@ class TwilioMessageHandler:
         if  mediaSize > 0 and mediaSize < 15:
             message.body("Requested video \n ")
             message.media(url)
-            print("decoded response -")
-            print(str(message))
         else:
             message.body(f"✅ Avast ye matey! Take heed and follow this map to the treasure: \n {url}")
         
