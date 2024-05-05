@@ -2,12 +2,14 @@ import os
 import requests
 import validators
 from concurrent.futures import ThreadPoolExecutor
+import urllib.request
+import urllib.error
 
 class TeraDownloader:
     
     def get_fast_download_link(self, url):
         dlink = self.__get_dlink(url)
-        if dlink and "d.terabox.app" in dlink:
+        if dlink is not None and dlink and "d.terabox.app" in dlink:
             dlink = dlink.replace("d.terabox.app", "d3.terabox.app")
             return dlink
         return None
@@ -18,7 +20,8 @@ class TeraDownloader:
         # Define a function to be executed by each thread
         def fetch_and_append(url):
             dlink = self.get_fast_download_link(url)
-            if dlink is not None and validators.url(dlink):
+            print(f"\n fast download link {dlink} \n")
+            if dlink is not None and validators.url(dlink) and self.__is_valid(dlink):
                 dlinks.append(dlink)
 
         # Create a thread pool with a maximum of 5 threads
@@ -32,6 +35,7 @@ class TeraDownloader:
     def __get_dlink(self, url):
         key = os.environ.get("TERA_KEY")
         if key is None:
+            print("Api key kidat hgai")
             return "Api key not found"
         headers = {"key": key}
         data = {"url": url}
@@ -41,8 +45,22 @@ class TeraDownloader:
             if response.status_code == 200:
                 json_response = response.json()
                 if json_response:
-                    return json_response[0].get("dlink")
+                    link = json_response[0].get("dlink")
+                    return link
         except Exception as e:
-            return f'Failed to get link {e}'
+            return None
             
-
+    def __is_valid(self, url):
+        try:
+            with urllib.request.urlopen(url) as response:
+                print("\n agau")
+                status_code = response.getcode()
+                content_size = int(response.headers.get('Content-Length', 0))
+                # Check if status code is 200, content type is 'text/', and content size is > 0
+                if status_code == 200 and content_size > 0:
+                    return True
+                else:
+                    print(f"Skipping URL {url}: Invalid status code, or content size.")
+        except urllib.error.URLError as e:
+            print("failed")
+        return False
