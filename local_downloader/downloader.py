@@ -12,7 +12,6 @@ class VideoDownloader:
             # Submit tasks to the thread pool
             for url in urls:
                 executor.submit(self.__download_video, url)
-        print("Task completed")
 
     def __download_video(self, url):
         filename = self.generate_filename(url)

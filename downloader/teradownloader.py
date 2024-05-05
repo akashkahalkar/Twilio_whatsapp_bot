@@ -41,5 +41,5 @@ class TeraDownloader:
                 if json_response:
                     return json_response[0].get("dlink")
         except Exception as e:
-            print("An error occurred:", e)
+            return f'Failed to get link {e}'
         return None
