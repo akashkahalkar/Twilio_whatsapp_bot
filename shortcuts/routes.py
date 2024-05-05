@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask import request
-from downloader.teradownloader import TeraDownloader
+from downloaders.teradownloader import TeraDownloader
 from handler import URLHandler
 import validators
 import re
