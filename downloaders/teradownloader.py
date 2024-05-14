@@ -2,11 +2,9 @@ import os
 import requests
 import validators
 from concurrent.futures import ThreadPoolExecutor
-import urllib.request
-import urllib.error
 
 class TeraDownloader:
-    
+
     def get_fast_download_link(self, url):
         dlink = self.__get_dlink(url)
         if dlink is not None and dlink and "data.terabox.app" in dlink:
@@ -35,7 +33,6 @@ class TeraDownloader:
     def __get_dlink(self, url):
         key = os.environ.get("TERA_KEY")
         if key is None:
-            print("Api key kidat hgai")
             return "Api key not found"
         headers = {"key": key}
         data = {"url": url}
@@ -52,15 +49,10 @@ class TeraDownloader:
             
     def __is_valid(self, url):
         try:
-            with urllib.request.urlopen(url) as response:
-                print("\n agau")
-                status_code = response.getcode()
-                content_size = int(response.headers.get('Content-Length', 0))
-                # Check if status code is 200, content type is 'text/', and content size is > 0
-                if status_code == 200 and content_size > 0:
-                    return True
-                else:
-                    print(f"Skipping URL {url}: Invalid status code, or content size.")
-        except urllib.error.URLError as e:
+            response = requests.head(url)
+            size_in_bytes = int(response.headers.get('content-length', 0))
+            if response.status_code == 200 and size_in_bytes > 0:
+                return True
+        except Exception as e:
             print("failed")
         return False
