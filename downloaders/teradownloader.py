@@ -7,8 +7,8 @@ class TeraDownloader:
 
     def get_fast_download_link(self, url):
         dlink = self.__get_dlink(url)
-        if dlink is not None and dlink and "data.terabox.app" in dlink:
-            dlink = dlink.replace("data.terabox.app", "d8.freeterabox.com")
+        if dlink is not None and dlink and "d.terabox.app" in dlink:
+            dlink = dlink.replace("d.terabox.app", "d8.freeterabox.com")
             return dlink
         return None
     
@@ -42,7 +42,7 @@ class TeraDownloader:
             if response.status_code == 200:
                 json_response = response.json()
                 if json_response:
-                    link = json_response[0].get("fdlink")
+                    link = json_response[0].get("dlink")
                     return link
         except Exception as e:
             return None
