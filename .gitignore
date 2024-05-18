@@ -4,4 +4,4 @@ app/secret_keys.py
 *.mp4
 run.sh
 run.bat
-local_downloader/bulk_tera_downloader.py
+local_downloader/*.py
