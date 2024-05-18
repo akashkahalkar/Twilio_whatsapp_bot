@@ -5,10 +5,17 @@ from concurrent.futures import ThreadPoolExecutor
 
 class TeraDownloader:
 
+    donwload_domain = os.environ.get("DOWNLOAD_DOMAIN")
+    fast_download_domain = os.environ.get("FAST_DOWNLOAD_DOMAIN")
+    base_url = os.environ.get("TERA_BASE_URL")
+    key = os.environ.get("TERA_KEY")
+    link_param = os.environ.get("LINK_PARAM")
+
     def get_fast_download_link(self, url):
         dlink = self.__get_dlink(url)
-        if dlink is not None and dlink and "d.terabox.app" in dlink:
-            dlink = dlink.replace("d.terabox.app", "d8.freeterabox.com")
+        
+        if dlink is not None and dlink and self.donwload_domain in dlink:
+            dlink = dlink.replace(self.donwload_domain, self.fast_download_domain)
             return dlink
         return None
     
@@ -31,18 +38,17 @@ class TeraDownloader:
         return dlinks
 
     def __get_dlink(self, url):
-        key = os.environ.get("TERA_KEY")
-        if key is None:
+        if self.key is None:
             return "Api key not found"
-        headers = {"key": key}
+        headers = {"key": self.key}
         data = {"url": url}
 
         try:
-            response = requests.post("https://teradownloader.com/api/application", headers=headers, json=data, verify=False)
+            response = requests.post(self.base_url, headers=headers, json=data, verify=False)
             if response.status_code == 200:
                 json_response = response.json()
                 if json_response:
-                    link = json_response[0].get("dlink")
+                    link = json_response[0].get(self.link_param)
                     return link
         except Exception as e:
             return None
