@@ -5,3 +5,5 @@ app/secret_keys.py
 run.sh
 run.bat
 local_downloader/*.py
+local_downloader/bulk_tera_downloader.py
+local_downloader/routes.py
