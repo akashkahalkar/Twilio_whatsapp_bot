@@ -39,7 +39,8 @@ class TeraDownloader:
 
     def __get_dlink(self, url):
         if self.key is None:
-            return "Api key not found"
+            print("Api key not found")
+            return None
         headers = {"key": self.key}
         data = {"url": url}
 
@@ -51,6 +52,7 @@ class TeraDownloader:
                     link = json_response[0].get(self.link_param)
                     return link
         except Exception as e:
+            print(e)
             return None
             
     def __is_valid(self, url):
@@ -60,5 +62,5 @@ class TeraDownloader:
             if response.status_code == 200 and size_in_bytes > 0:
                 return True
         except Exception as e:
-            print("failed")
+            print(e)
         return False
