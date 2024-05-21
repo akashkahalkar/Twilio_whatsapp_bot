@@ -8,3 +8,4 @@ local_downloader/*.py
 local_downloader/bulk_tera_downloader.py
 local_downloader/routes.py
 .vscode/settings.json
+.vercel
