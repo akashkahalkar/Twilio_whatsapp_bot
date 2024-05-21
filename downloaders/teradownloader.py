@@ -25,7 +25,6 @@ class TeraDownloader:
         # Define a function to be executed by each thread
         def fetch_and_append(url):
             dlink = self.get_fast_download_link(url)
-            print(f"\n fast download link {dlink} \n")
             if dlink is not None and validators.url(dlink) and self.__is_valid(dlink):
                 dlinks.append(dlink)
 
