@@ -9,12 +9,14 @@ shortcuts = Blueprint('shortcuts', __name__, url_prefix='/shortcuts')
 
 @shortcuts.route('/', methods=['GET'])
 def get_download_link():
-    error = "❌ *Arrr! I be at yer service, matey! Unfortunately,* \n Check ya links aye! 🏴‍☠️"
+    error = "Something went wrong!"
     input_url = str(request.values.get("Body"))
     if not validators.url(input_url):
+        print(f"Invalid url received {input_url}")
         return error
     download_link = URLHandler().handle(input_url)
     if download_link is None:
+        print("download link is None")
         return error
     return str(download_link)
 
@@ -31,16 +33,14 @@ def get_urls():
         for url in urls:
             cleaned_url = re.sub(r'(\\n\d*|\\n\')+?$', '', url)
             clean.append(cleaned_url)
-        
         dlinks = TeraDownloader().bulk_fetch_download_links(clean)
-        #VideoDownloader().download_videos(dlinks)
-
         data = {
             "urls": dlinks
         }
         return jsonify(data)
     else:
-        return "Error"
+        print("failed to parsed data")
+        return None
 
 
 

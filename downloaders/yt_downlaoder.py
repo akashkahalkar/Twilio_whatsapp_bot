@@ -15,5 +15,6 @@ class YTLoader:
                 dUrl = info["url"]
                 return dUrl
         except Exception as e:
+            print(f"exception occured {e}")
             return None
 

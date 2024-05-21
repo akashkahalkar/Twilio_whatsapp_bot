@@ -6,7 +6,7 @@ class InstaDownloader:
         loader = instaloader.Instaloader()
         try: 
             post = instaloader.Post.from_shortcode(loader.context, post_url.split("/")[-2])
-            return post.video_url
-
+            return post.video_url or post.url
         except Exception as e:
+            print(f"exception occured {e}")
             return None

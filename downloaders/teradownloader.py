@@ -25,7 +25,6 @@ class TeraDownloader:
         # Define a function to be executed by each thread
         def fetch_and_append(url):
             dlink = self.get_fast_download_link(url)
-            print(f"\n fast download link {dlink} \n")
             if dlink is not None and validators.url(dlink) and self.__is_valid(dlink):
                 dlinks.append(dlink)
 
@@ -39,7 +38,8 @@ class TeraDownloader:
 
     def __get_dlink(self, url):
         if self.key is None:
-            return "Api key not found"
+            print("Api key not found")
+            return None
         headers = {"key": self.key}
         data = {"url": url}
 
@@ -51,6 +51,7 @@ class TeraDownloader:
                     link = json_response[0].get(self.link_param)
                     return link
         except Exception as e:
+            print(e)
             return None
             
     def __is_valid(self, url):
@@ -60,5 +61,5 @@ class TeraDownloader:
             if response.status_code == 200 and size_in_bytes > 0:
                 return True
         except Exception as e:
-            print("failed")
+            print(e)
         return False
