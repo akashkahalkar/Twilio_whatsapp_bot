@@ -17,13 +17,7 @@ class URLHandler:
         elif any(domain in url for domain in tera_domain_list):
             return TeraDownloader().get_fast_download_link(url)
         elif any(domain in url for domain in insta_domain_list):
-            result = InstaDownloader().get_reel_download_link(url)
-            if result is not None:
-                return result
-            else:
-                print("failed with instaloader, trying ytdlp")
-                result = YTLoader().getUrl(url)    
-                if result is not None:
-                    return result
-        print(f"No supported urls found {url}")
-        return None
+            result = InstaDownloader().download(url)
+            if not result:
+                result = YTLoader().getUrl(url)
+            return result
