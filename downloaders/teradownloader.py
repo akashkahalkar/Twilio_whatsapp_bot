@@ -1,4 +1,5 @@
 import os
+from flask import json
 import requests
 import validators
 from concurrent.futures import ThreadPoolExecutor
@@ -45,11 +46,15 @@ class TeraDownloader:
 
         try:
             response = requests.post(self.base_url, headers=headers, json=data, verify=False)
-            if response.status_code == 200:
-                json_response = response.json()
-                if json_response:
-                    link = json_response[0].get(self.link_param)
-                    return link
+            json_response = response.json()            
+            if response.status_code == 200 and json_response and len(json_response) > 0:
+                link = json_response[0].get(self.link_param)
+                return link
+            else:
+                error = json_response.get("error") or f"Failed to get response error code {response.status_code}"
+                print(error)
+                return None
+
         except Exception as e:
             print(e)
             return None
