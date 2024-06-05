@@ -14,9 +14,10 @@ class TeraDownloader:
 
     def get_fast_download_link(self, url):
         dlink = self.__get_dlink(url)
-        
+        print("core downlod link", dlink)
         if dlink is not None and dlink and self.donwload_domain in dlink:
             dlink = dlink.replace(self.donwload_domain, self.fast_download_domain)
+            print("fast downlod link", dlink)
             return dlink
         return None
     
@@ -49,6 +50,7 @@ class TeraDownloader:
             json_response = response.json()
             print(json_response)          
             if response.status_code == 200 and json_response and len(json_response) > 0:
+                print("link param", self.link_param)
                 link = json_response[0].get(self.link_param)
                 return link
             else:
