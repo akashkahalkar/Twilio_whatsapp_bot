@@ -10,6 +10,7 @@ class URLHandler:
         yt_domain_list = os.environ.get("YT_DOMAINS").split(sep=',')
         insta_domain_list = os.environ.get("INSTA_DOMAIN").split(sep=',')
        
+        
         if any(domain in url for domain in yt_domain_list):
             return YTLoader().getUrl(url)
         elif tera_keywords in url:
@@ -19,4 +20,7 @@ class URLHandler:
             if not result:
                 result = YTLoader().getUrl(url)
             return result
+        
+        print(tera_keywords)
+        print(url)
         return "Did not match with any know domains"
