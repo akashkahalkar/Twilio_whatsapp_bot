@@ -47,19 +47,18 @@ class TeraDownloader:
 
         try:
             response = requests.post(self.base_url, headers=headers, json=data, verify=False)
+            print(response)
             json_response = response.json()
-            print(json_response)          
             if response.status_code == 200 and json_response and len(json_response) > 0:
                 print("link param", self.link_param)
                 link = json_response[0].get(self.link_param)
                 return link
             else:
                 error = json_response.get("error") or f"Failed to get response error code {response.status_code}"
-                print(error)
+                print("API error ", error)
                 return None
-
         except Exception as e:
-            print(e)
+            print("Exception occured", e)
             return None
             
     def __is_valid(self, url):
