@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Blueprint, jsonify
 from flask import request
 from downloaders.teradownloader import TeraDownloader
@@ -19,6 +20,13 @@ def get_download_link():
         print("download link is None")
         return error
     return str(download_link)
+
+@shortcuts.route('/tera', methods=['POST', 'GET'])
+def get_tera_download():
+    input_url = str(request.values.get("Body"))
+    if input_url:
+        return TeraDownloader().get_fast_download_link(input_url)
+    return "No url provided"
 
 @shortcuts.route('/bulk', methods=['POST', 'GET'])
 def get_urls():
