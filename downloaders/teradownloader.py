@@ -46,7 +46,8 @@ class TeraDownloader:
 
         try:
             response = requests.post(self.base_url, headers=headers, json=data, verify=False)
-            json_response = response.json()            
+            json_response = response.json()
+            print(json_response)          
             if response.status_code == 200 and json_response and len(json_response) > 0:
                 link = json_response[0].get(self.link_param)
                 return link
